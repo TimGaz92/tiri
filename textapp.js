@@ -4,7 +4,7 @@
 console.log("welcome to T.I.R.I - (text interface and recognition Interface");
 console.log("---------------------------------------------------------------");
 console.log("please enter a query in the following syntax:");
-console.log("node tiri.js searchtype (movie, twitter, song) search term");
+console.log("node tiri.js searchtype (movie, twitter, song, weather) search term");
 console.log("---------------------------------------------------------------");
 
 
@@ -14,6 +14,7 @@ var request = require('request');
 var spotify = require('spotify');
 // twitter
 var twitter = require('twitter');
+var weather = require('weather-js');
 var twitterKeys = require('./keys.js');
 
 //check what data type the user is searching
@@ -24,21 +25,29 @@ var searchTerm = process.argv[3];
 
 if (searchType == "movie") {
 	movie();
+	console.log("movie selected: process request");
 	if (searchTerm == null || searchTerm == "") {
 		searchTerm = "mr nobody";
 	}
 }
-else if (searchType == "twitter"){
-	twitter();
-// console.log("twitter selected"); //functioning
+else{}
+////////////////////////////////////////////////////////////
+ if (searchType == "twitter"){
+	Twitter();
+	console.log("twitter selected: processing request");
  }
-else if (searchType == "song") {
+ else{}
+//////////////////////////////////////////////////////////// 	
+ if (searchType == "song") {
 	song();	
+	console.log("song selected: processing request");
 }
 else{
-	console.log("error, see instructions");
 }
-
+/////////////////////////////////////////////////////////////
+if (searchType == "weather") {
+	Weather();
+}
 
 //movie function
 function movie(){
@@ -55,9 +64,8 @@ function movie(){
 }
 
 //twitter function
-function twitter(){
-	console.log("twitter function running"); //function isn't running
-	var client = new Twitter({
+function Twitter(){
+	var client = new Twitter({      //this is runnign infinetly and throwing an overflow error
   		consumer_key: twitterKeys.consumer_key,
   		consumer_secret: twitterKeys.consumer_secret,
   		access_token_key: twitterKeys.access_token,
@@ -73,7 +81,7 @@ console.log("test linking js" + client.twitterKeys.consumer_key);
 		});
 }
 
-//spotify / song function
+//spotify 			this is actually working - the api key just expires after 10 min
 function song(){
 		console.log("spotify function running");
 //code here  
@@ -90,4 +98,14 @@ console.log(searchTerm + " preview: " + data.tracks.items[i].preview_url);
 console.log("--------------------------------------------------------------------");
 		}
 	});
+}
+function Weather(){
+weather.find({search: searchTerm, degreeType: 'F'}, function(err, result) {
+  if(err) console.log(err);		//current is undefined *6/3*
+ var currentTemp = result[0].current.temperature;
+ var currentSky  = result[0].current.skytext;
+  //console.log(JSON.stringify(result, null, 2));
+console.log(searchTerm + " Temp is: " + currentTemp);
+console.log(searchTerm + " weather is: " + currentSky);
+});
 }
