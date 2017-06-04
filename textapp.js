@@ -10,8 +10,9 @@ console.log("---------------------------------------------------------------");
 
 //request 
 var request = require('request');
-//spotify
-var spotify = require('spotify');
+//spotify **THIS IS THE OLD VERSION
+//var spotify = require('spotify');
+var Spotify = require('node-spotify-api'); //this is the updated version
 // twitter
 var twitter = require('twitter');
 var weather = require('weather-js');
@@ -31,7 +32,7 @@ if (searchType == "movie") {
 	}
 }
 else{}
-////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////---BROKEN----
  if (searchType == "twitter"){
 	Twitter();
 	console.log("twitter selected: processing request");
@@ -47,7 +48,12 @@ else{
 /////////////////////////////////////////////////////////////
 if (searchType == "weather") {
 	Weather();
+	console.log("weather Selected: processing request");
 }
+else{
+}
+////////////////////////////////////////////////////////////
+
 
 //movie function
 function movie(){
@@ -83,29 +89,37 @@ console.log("test linking js" + client.twitterKeys.consumer_key);
 
 //spotify 			this is actually working - the api key just expires after 10 min
 function song(){
-		console.log("spotify function running");
-//code here  
-	spotify.search({ type: 'track', query:searchTerm}, function(err, data) {
-    	if ( err ) {
-    	    console.log('Error occurred: ' + err);
-        	return;
-    	}
-    	for (var i = 0; i <= 20; i++) {
-console.log("--------------------------------------------------------------------");    	 	
-console.log(searchTerm + " Artist: " + data.tracks.items[i].album.artists[0].name);
-console.log(searchTerm + " Title: " + data.tracks.items[i].album.name);
-console.log(searchTerm + " preview: " + data.tracks.items[i].preview_url);
-console.log("--------------------------------------------------------------------");
-		}
+	console.log("spotify function running");
+	var spotify = new Spotify({
+  		id: "ea0f7797044049adb5845f99f9c2f3d3",
+  		secret: "83a7ebbbd5c548638dada940eaf9db91",
 	});
+spotify
+  .search({ type: 'track', query: searchTerm })
+  .then(function(response) {
+  	//console.log(response);
+  			for (var i = 0; i <= 20; i++) {
+		 console.log("--------------------------------------------------------------------");    	 	
+		 console.log(searchTerm + " Artist: " + response.tracks.items[i].album.artists[0].name);
+		 console.log(searchTerm + " Title: " + response.tracks.items[i].album.name);
+		 console.log(searchTerm + " preview: " + response.tracks.items[i].preview_url);
+		 console.log("--------------------------------------------------------------------");
+		 	}
+		
+  })
+  .catch(function(err) {
+    //console.log(error);
+  });	
+
 }
+//////////////////////////////////////////////////////////////////////////////
 function Weather(){
 weather.find({search: searchTerm, degreeType: 'F'}, function(err, result) {
   if(err) console.log(err);		//current is undefined *6/3*
  var currentTemp = result[0].current.temperature;
  var currentSky  = result[0].current.skytext;
   //console.log(JSON.stringify(result, null, 2));
-console.log(searchTerm + " Temp is: " + currentTemp);
+console.log(searchTerm + " Temp is: " + currentTemp + " degrees fahrenheit");
 console.log(searchTerm + " weather is: " + currentSky);
 });
 }
