@@ -32,7 +32,7 @@ if (searchType == "movie") {
 	}
 }
 else{}
-////////////////////////////////////////////////////////////---BROKEN----
+////////////////////////////////////////////////////////////
  if (searchType == "twitter"){
 	Twitterfunction();
 	console.log("twitter selected: processing request");
@@ -68,7 +68,7 @@ function movie(){
 		}
 	});
 }
-
+////////////////////////////////////////////////////////////////////////////////////////////////
 //twitter function
 function Twitterfunction(){
 	var client = new twitter({      
@@ -90,7 +90,7 @@ function Twitterfunction(){
   			else{console.log(error)}	
 			});
 }
-
+///////////////////////////////////////////////////////////////////////////////////////////
 //spotify 			
 function song(){
 	console.log("spotify function running");
