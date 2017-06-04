@@ -34,7 +34,7 @@ if (searchType == "movie") {
 else{}
 ////////////////////////////////////////////////////////////---BROKEN----
  if (searchType == "twitter"){
-	Twitter();
+	Twitterfunction();
 	console.log("twitter selected: processing request");
  }
  else{}
@@ -70,24 +70,28 @@ function movie(){
 }
 
 //twitter function
-function Twitter(){
-	var client = new Twitter({      //this is runnign infinetly and throwing an overflow error
+function Twitterfunction(){
+	var client = new twitter({      
   		consumer_key: twitterKeys.consumer_key,
   		consumer_secret: twitterKeys.consumer_secret,
   		access_token_key: twitterKeys.access_token,
   		access_token_secret: twitterKeys.access_token_secret,
 	});
-console.log("test linking js" + client.twitterKeys.consumer_key);
+//console.log("test linking js" + client.twitterKeys.consumer_key); I don't remember what this is 6-4
 		var params = {screen_name: 'nodejs'};
 		client.get('statuses/user_timeline',params, function(error, tweets, response) {
   			if (!error) {
-    			console.log(tweets);
-    			console.log("twitter call working");
-  			}
-		});
+  					console.log("--------------------------------------------------------")
+  					console.log("tweets: ")
+  				for (var i = 20; i < 20; i++) {
+  					console.log(tweets[i].text);
+  				}
+  			}	
+  			else{console.log(error)}	
+			});
 }
 
-//spotify 			this is actually working - the api key just expires after 10 min
+//spotify 			
 function song(){
 	console.log("spotify function running");
 	var spotify = new Spotify({
