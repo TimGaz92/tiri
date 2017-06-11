@@ -17,6 +17,7 @@ var Spotify = require('node-spotify-api'); //this is the updated version
 var twitter = require('twitter');
 var weather = require('weather-js');
 var twitterKeys = require('./keys.js');
+var tts = require('node-google-text-to-speech');
 
 //check what data type the user is searching
 var searchType = process.argv[2];
@@ -26,6 +27,13 @@ var searchTerm = process.argv[3];
 
 if (searchType == "movie") {
 	movie();
+  	tts.translate('en', 'finding movies for you', function(result) {
+  	//console.log(result); 
+  	if(result.success) { //check for success 
+  		var response = { 'audio' : result.data };
+  		socket.emit('ttsResult', response); //emit the audio to client 
+  	}
+  });
 	console.log("movie selected: process request");
 	if (searchTerm == null || searchTerm == "") {
 		searchTerm = "mr nobody";
@@ -35,12 +43,26 @@ else{}
 ////////////////////////////////////////////////////////////
  if (searchType == "twitter"){
 	Twitterfunction();
+	 tts.translate('en', 'finding your tweets', function(result) {
+  	//console.log(result); 
+  	if(result.success) { //check for success 
+  		var response = { 'audio' : result.data };
+  		socket.emit('ttsResult', response); //emit the audio to client 
+  	}
+  });
 	console.log("twitter selected: processing request");
  }
  else{}
 //////////////////////////////////////////////////////////// 	
  if (searchType == "song") {
 	song();	
+	  tts.translate('en', 'checking spotify', function(result) {
+  	//console.log(result); 
+  	if(result.success) { //check for success 
+  		var response = { 'audio' : result.data };
+  		socket.emit('ttsResult', response); //emit the audio to client 
+  	}
+  });
 	console.log("song selected: processing request");
 }
 else{
@@ -48,6 +70,13 @@ else{
 /////////////////////////////////////////////////////////////
 if (searchType == "weather") {
 	Weather();
+	  	tts.translate('en', 'the weaher today is', function(result) {
+  	//console.log(result); 
+  	if(result.success) { //check for success 
+  		var response = { 'audio' : result.data };
+  		socket.emit('ttsResult', response); //emit the audio to client 
+  	}
+  });
 	console.log("weather Selected: processing request");
 }
 else{
