@@ -1,0 +1,27 @@
+{
+  "name": "tiri",
+  "version": "1.0.0",
+  "description": "",
+  "main": "keys.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TimGaz92/tiri.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TimGaz92/tiri/issues"
+  },
+  "homepage": "https://github.com/TimGaz92/tiri#readme",
+  "dependencies": {
+    "google-tts-api": "0.0.1",
+    "request": "^2.81.0",
+    "spotify": "^0.3.0",
+    "twitter": "^1.7.1",
+    "weather-js": "^2.0.0"
+  }
+}
